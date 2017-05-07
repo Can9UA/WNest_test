@@ -137,6 +137,39 @@ function initQuestionsFunctionality() {
       
       popups.answer.modal('show');
     })
+
+    const select = body.find('#questionInput');
+    
+    if (select.length) {
+      select.autocomplete({
+        source: function (request, response) {
+          let re = $.ui.autocomplete.escapeRegex(request.term);
+          let matcher = new RegExp(re, "i");
+          
+          response($.grep(
+            ($.map(questionsData, function (question, i) {
+              return {
+                label: question.name,
+                value: question.id,
+                keywords: question.keywords
+              };
+            })),
+            function (question) {
+              return isQuestionMatch(question, matcher)
+            }
+          ))
+        }
+      })
+      .on("autocompleteselect", function(event, ui) {
+        console.log(ui);
+        fillInPopupData(
+          popups.answer,
+          getElementFromArr(questionsData, {id: ui.item.value})
+        );
+
+        popups.answer.modal('show');
+      });
+    }
   }
   
   function updateQuestionCounter(id) {
@@ -166,6 +199,12 @@ function initQuestionsFunctionality() {
     }
 
     return undefined;
+  }
+  
+  function isQuestionMatch(question, matcher) {
+    for (let keyword of question.keywords) {
+      if (matcher.test(keyword)) return true;
+    }
   }
 }
 
