@@ -172,7 +172,7 @@ function initQuestionsFunctionality() {
             };
           })),
           function (question) {
-            return isQuestionMatch(question, matcher)
+            return $.trim(questionInput.val()) === '' ? false : isQuestionMatch(question, matcher);
           }
         ))
       }
