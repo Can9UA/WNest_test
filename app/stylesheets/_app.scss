@@ -1,0 +1,1140 @@
+// Add Media Queries Mixin
+@import "helper";
+
+// Colors
+@import "variables";
+
+// Swiper
+@import "swiper";
+// Perfect Scrollbar
+@import "_perfect-scrollbar.scss";
+
+
+// Font
+@import "../fonts/webfonts/ff-meta.css";
+html {
+  height: 100%;
+}
+
+body {
+  position: relative;
+    font-family: 'FFMetaHebrew', 'Arial', sans-serif;
+    font-weight: normal;
+    direction: $text-direction;
+    text-align: $start;
+    height: 100%;
+    // For different image in your code, you can use this solution. Use
+    //background-image: url(../images/#{$text-direction}/bg.png);
+    background-image: url(../images/bg_m.png);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    @include breakpoint(xs-up) {
+      background-size: 100% auto;
+      background-position: center center;
+      background-color: #97d3ec;
+    }
+
+    @include breakpoint(md-up) {
+      height: 100%;
+      background-image: url(../images/bg.jpg);
+      background-position: center top;
+      background-size: cover;
+    }
+
+    &.bg-2 {
+      background-image: url(../images/bg2_m.jpg);
+      background-position: center bottom;
+      background-attachment: fixed;
+      @include breakpoint(md-up) {
+        background-image: url(../images/bg2.jpg);
+      }
+    }
+
+    &.bg-3 {
+      background-image: url(../images/bg3_m.jpg);
+      background-position: center top;
+      background-attachment: fixed;
+      @include breakpoint(md-up) {
+        background-size: 100% auto;
+        background-position: center top;
+        background-image: url(../images/bg3.jpg);
+      }
+    }
+
+	@include if-ltr {
+
+	}
+
+	@include if-rtl {
+
+	}
+}
+
+.home-page {
+  nav {
+    display: none;
+  }
+  .menu-button {
+    //display: none;
+  }
+}
+
+
+header {
+  flex: 1 0 15%;
+  margin-bottom: 15px;
+  .main-logo {
+    width: 80%;
+    padding-top: 15px;
+    margin-left: 15px;
+    @include breakpoint(md-up) {
+      padding-top: 20px;
+      margin-left: auto;
+      width: 35%;
+    }
+  }
+
+  & > nav {
+    display: none;
+    margin-top: -1.5vw;
+    margin-left: calc(100% - 94%);
+    text-align: center;
+    @include breakpoint(md-up) {
+      display: block;
+    }
+    a {
+      margin: 0 2%;
+      color: #fff;
+      font-size: 1.4vw;
+      text-shadow: 1px 1px 1px rgba(#000, .9);
+
+      &.active,
+      &:hover,
+      &:focus {
+        color: $color-green;
+        text-decoration: none;
+      }
+    }
+  }
+
+  .menu-button {
+			position: absolute;
+			top: 3px;
+      right: 0;
+      margin: 0;
+			padding: 15px;
+			cursor: pointer;
+			-webkit-transition: .3s;
+			transition: .3s;
+      z-index: 1;
+      @include breakpoint(md-up) {
+        display: none;
+      }
+
+		}
+		.menu-button .bar:nth-of-type(1) {
+			margin-top: 0px;
+		}
+		.menu-button .bar:nth-of-type(3) {
+			margin-bottom: 0px;
+		}
+		.bar {
+			position: relative;
+			display: block;
+			width: 30px;
+			height: 5px;
+			margin: 5px auto;
+			background-color: #fff;
+			border-radius: 10px;
+			-webkit-transition: .3s;
+			transition: .3s;
+		}
+
+    .menu-content {
+      display: none;
+      position: absolute;
+      top: 0;
+      right: 0;
+      padding: 15px 15px 0 15px;
+      background-color: #fff;
+      z-index: 10;
+      &.active {
+        display: block;
+      }
+      .social-btns {
+        a {
+          margin-right: 5px;
+        }
+        img {
+          width: 32px;
+          height: 32px;
+        }
+      }
+      .close-btn,
+      .home-btn {
+        float: none;
+        padding: 5px;
+        margin-bottom: 10px;
+        width: 32px;
+        height: 32px;
+        line-height: 30px;
+        color: #fff;
+        background-color: $color-green;
+        text-align: center;
+      }
+      nav {
+        margin: 0;
+        a {
+          margin: 0;
+          display: block;
+          width: 100%;
+          margin-bottom: 10px;
+          padding: 10px 20px 10px;
+          color: #fff;
+          font-size: 6.5vw;
+          line-height: 1;
+          font-weight: bold;
+          text-align: right;
+          text-decoration: none;
+          background-color:  $color-green;
+          p {
+            margin: 0;
+            font-size: 14px;
+            font-weight: normal;
+          }
+        }
+      }
+    }
+}
+
+.main-menu {
+  flex: 0 0 100%;
+  margin: 10% 0 0;
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  @include breakpoint(md-up) {
+    margin: 10% auto 0;
+    flex: 0 0 50%;
+  }
+  a {
+    flex: 0 0 32%;
+    text-decoration: none;
+    .menu-box {
+      padding: 10px;
+      color: #fff;
+      text-align: center;
+      border-radius:  10px;
+      background-color: $color-green;
+      @extend .box-shadow;
+      @include breakpoint(md-up) {
+        padding: 10px 10px 20px;
+      }
+      &:hover {
+        background-color: darken($color-green, 5%);
+      }
+      h2 {
+        margin-top: 0;
+        margin-bottom: 0;
+        padding-bottom: 5px;
+        font-size: 7vw;
+        font-weight: bold;
+        line-height: 1;
+        border-bottom: 1px solid #fff;
+        @include breakpoint(md-up) {
+          padding-bottom: 0;
+          margin-bottom: 10px;
+          font-size: 38px;
+          border: 0;
+          @extend .text-shadow;
+        }
+      }
+      p {
+        margin: 0 0 5px;
+        font-size: 3.6vw;
+        line-height: 1.1;
+        @include breakpoint(md-up) {
+          margin: 0;
+          font-size: 17px;
+          @extend .text-shadow;
+        }
+      }
+    }
+  }
+}
+.sub-menu {
+    flex: 0 0 100%;
+    margin-top: 5px;
+    text-align: center;
+    @include breakpoint(md-up) {
+      margin-top: 20px;
+    }
+  .btn-roles {
+    padding: 6px 6px;
+    margin: 0 auto;
+    width: 29.5vw;
+    color: #fff;
+    text-align: center;
+    border-radius:  10px;
+    background-color: $color-green;
+    font-size: 4vw;
+    @extend .box-shadow;
+    @include breakpoint(md-up) {
+      width: auto;
+      height: 44px;
+      padding: 0 18px 0;
+      font-size: 24px;
+      @extend .text-shadow;
+    }
+  }
+
+  .btn-research {
+    padding: 6px 6px;
+    margin: 0 auto;
+    width: 29.5vw;
+    color: #fff;
+    text-align: center;
+    border-radius:  10px;
+    background-color: $color-green;
+    font-size: 4vw;
+    @extend .box-shadow;
+    @include breakpoint(md-up) {
+      width: auto;
+      height: 44px;
+      padding: 0 18px 0;
+      font-size: 24px;
+      @extend .text-shadow;
+    }
+  }
+}
+
+.site-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  height: 100%;
+}
+.site-content {
+  display: flex;
+  flex: 0 1 85%;
+  flex-wrap: wrap;
+  @include breakpoint(xs) {
+    height: 100%;
+  }
+  @include breakpoint(md-up) {}
+
+  &.questions-page{
+    @include breakpoint(xs) {
+      flex: 0 1 85%;
+      align-items: stretch;
+      flex-direction: column-reverse;
+      flex-wrap: nowrap;
+      height: 100%;
+    }
+    @include breakpoint(sm) {
+      flex: 1 1 auto;
+      align-items: stretch;
+      flex-direction: row-reverse;
+    }
+  }
+}
+
+.questions-menu {
+  position: relative;
+  margin: 3% auto 0;
+  padding: 0 15px;
+  width: 100%;
+  //height: 100%;
+  flex: 0 1 auto;
+  overflow-y: auto;
+
+  @include breakpoint(md-up) {
+    margin: 3% auto 20px;
+    padding: 0 40px;
+    width: 65%;
+    overflow: visible;
+    align-self: baseline;
+  }
+  .swiper-wrapper {
+    @include breakpoint(xs) {
+      height: 100%;
+      flex-wrap: wrap;
+    }
+    @include breakpoint(sm) {
+      height: 100%;
+      flex-wrap: wrap;
+    }
+  }
+  .swiper-slide {
+    margin: 0 0 3px 0;
+    @include breakpoint(xs) {
+      margin-bottom: 10px;
+      height: auto;
+      width: 99%;
+      &:last-child {
+        margin-bottom: 12vh;
+      }
+    }
+    @include breakpoint(sm) {
+      margin-bottom: 10px;
+      height: auto;
+      width: 99%;
+      &:last-child {
+        margin-bottom: 12vh;
+      }
+    }
+  }
+
+  .swiper-button-next,
+  .swiper-button-prev {
+    display: none;
+    @include breakpoint(md-up) {
+      display: block;
+    }
+  }
+
+  a {
+    text-decoration: none;
+  }
+  .thumbnail{
+    /* Center slide text vertically */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 0px;
+    height: 90px;
+    border: 0;
+    border-radius: 10px;
+    background-color: $color-green;
+    @extend .box-shadow;
+    &:hover {
+      background-color: darken($color-green, 5%);
+    }
+
+    & > .caption {
+      color: #fff;
+      padding: 15px;
+      @include breakpoint(md-up) {
+        padding: 15px;
+      }
+      h5 {
+        margin-top: 5px;
+        font-size: 6vw;
+        font-weight: normal;
+        text-align: center;
+        @include breakpoint(md-up) {
+          font-size: 24px;
+
+        }
+      }
+    }
+  }
+}
+
+.question-input-container {
+  margin-top: 10px;
+  padding: 5px 0;
+  color: #fff;
+  text-align: center;
+  background-color: $color-green;
+  flex: 0 0 auto;
+  width: 100%;
+  @extend .box-shadow;
+  @include breakpoint(md-up) {
+    margin-top: 0;
+    padding: 15px 0;
+    height: 130px;
+  }
+  label {
+     font-size: 34px;
+  }
+  form {
+    margin: 0 auto;
+    padding: 0 15px;
+    @include breakpoint(md-up) {
+      width: 50%;
+    }
+  }
+
+
+  .dropdown-menu > li > a {
+    font-size: 18px;
+    white-space: normal;
+  }
+
+  @include breakpoint(md-up) {
+    .dropdown-menu {
+      top: auto!important;
+      bottom: 100%!important;
+      margin-bottom: 1px;
+    }
+  }
+
+  .input-group-addon {
+    padding: 8px 12px 4px;
+    font-size: 16px;
+    font-weight: normal;
+    line-height: 1;
+    color: #000;
+    text-align: center;
+    background-color: #fff;
+    border-right: 0px solid transparent;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    @include breakpoint(md-up) {
+      padding: 6px 12px;
+    }
+  }
+  .form-control {
+    font-family: 'Arial', sans-serif;
+  }
+
+}
+
+// articles-menu
+///////////////////////////////////////
+.articles-menu {
+  position: relative;
+  margin: 1px auto 0;
+  padding: 0;
+  width: 100%;
+  flex: 0 1 auto;
+  overflow-y: auto;
+  height: 100%;
+
+  @include breakpoint(md-up) {
+    margin: 3% auto 0;
+    padding: 0 40px;
+    width: 65%;
+    height: 80%;
+    overflow: visible;
+  }
+
+  .swiper-wrapper {
+    @include breakpoint(xs) {
+      flex-wrap: wrap;
+    }
+    @include breakpoint(sm) {
+      flex-wrap: wrap;
+    }
+  }
+  .swiper-slide {
+    @include breakpoint(xs) {
+      margin-bottom: 10px;
+      height: auto;
+      &:last-child {
+        margin-bottom: 12vh;
+      }
+    }
+    @include breakpoint(sm) {
+      margin-bottom: 10px;
+      height: auto;
+      &:last-child {
+        margin-bottom: 12vh;
+      }
+    }
+  }
+
+  .swiper-button-next,
+  .swiper-button-prev {
+    display: none;
+    @include breakpoint(md-up) {
+      display: block;
+    }
+  }
+
+  .thumbnail.left-caption {
+    float: right;
+    margin: 0 0 4px 0;
+    padding: 0;
+    width: 100%;
+    border: 0;
+    border-radius: 0;
+    @extend .box-shadow;
+
+    & > img {
+      float: right;
+      margin-left: 15px;
+      width: 40%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    & > .caption {
+      padding: 15px;
+      h5 {
+        //font-size: 5vw; // client fix
+        font-size: 6vw;
+        font-weight: bold;
+        margin: 0;
+        @include breakpoint(md-up) {
+          //margin-bottom: 10px;
+          font-size: 24px;
+        }
+      }
+      p {
+        display: none; // client fix
+        margin: 0;
+        font-size: 4vw;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+        @include breakpoint(md-up) {
+          font-size: 16px;
+        }
+      }
+    }
+  }
+}
+
+// Videos
+.videos-menu {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  flex: 0 1 auto;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  align-self: baseline;
+
+  @include breakpoint(md-up) {
+    margin: 3% auto 0;
+    padding: 0 40px;
+    width: 50%;
+    height: auto;
+  }
+
+  .swiper-container {
+    @include breakpoint(md-up) {
+
+    }
+  }
+  .swiper-wrapper {
+    @include breakpoint(xs) {
+      flex-wrap: wrap;
+    }
+    @include breakpoint(sm) {
+      flex-wrap: wrap;
+    }
+  }
+  .swiper-slide {
+    @include breakpoint(xs) {
+      margin-bottom: 10px;
+      height: auto;
+      &:last-child {
+        margin-bottom: 65px;
+      }
+    }
+    @include breakpoint(sm) {
+      margin-bottom: 10px;
+      height: auto;
+      &:last-child {
+        margin-bottom: 14vh;
+      }
+    }
+  }
+
+  .swiper-button-next,
+  .swiper-button-prev {
+    display: none;
+    @include breakpoint(md-up) {
+      display: block;
+    }
+  }
+
+  .soon-box {
+    padding: 10px;
+    color: #fff;
+    text-align: center;
+    border-radius: 10px;
+    background-color: #5eab46;
+    p {
+      font-size: 28px;
+    }
+  }
+
+  .thumbnail.left-caption {
+    float: right;
+    margin: 0 0 4px 0;
+    padding: 0;
+    width: 100%;
+    border: 0;
+    border-radius: 0;
+    @extend .box-shadow;
+
+    & > img {
+      float: right;
+      margin-left: 15px;
+      width: 30%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      @include breakpoint(xs-up) {
+        height: 16vh;
+      }
+    }
+
+    & > .caption {
+      padding: 10px;
+      h5 {
+        font-size: 5vw;
+        font-weight: bold;
+        margin: 0;
+        @include breakpoint(md-up) {
+          margin-bottom: 10px;
+          font-size: 28px;
+        }
+      }
+      p {
+        margin: 0;
+        font-size: 4vw;
+        // text-overflow: ellipsis;
+        // white-space: nowrap;
+        // overflow: hidden;
+        @include breakpoint(md-up) {
+          font-size: 16px;
+        }
+      }
+    }
+  }
+
+  .video-box {
+    position: relative;
+
+    &:after {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      right: 0;
+      width: 30%;
+      height: 100%;
+      content:' ';
+      background-image: url("../images/play-btn.png");
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: 30%
+    }
+  }
+}
+
+.swiper-container {
+
+}
+.swiper-wrapper{
+
+}
+.swiper-slide {
+
+    @include breakpoint(md-up) {
+      margin: -1px;
+    }
+}
+
+.swiper-pagination {
+  left: 0;
+  right: 0;
+  margin-top: 10px;
+  .swiper-pagination-bullet {
+    margin: 0 0 0 5px;
+  }
+}
+
+.social {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  padding: 0 10px 10px 0;
+  z-index: 1;
+  @include breakpoint(xs) {
+    display: none;
+    width: 30%;
+    img {
+      width: 24px;
+    }
+  }
+  @include breakpoint(sm-up) {
+    width: 50%;
+    img {
+      width: 32px;
+    }
+  }
+  a {
+    display: inline-block;
+    padding-left: 5px;
+  }
+  @include breakpoint(md-up) {
+    display: block;
+  }
+}
+
+.tnuva-logo {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  z-index: 1;
+  @include breakpoint(xs) {
+    width: 31%;
+    img {
+      width: 100%;
+    }
+  }
+  @include breakpoint(sm) {
+    width: 31%;
+    img {
+      width: 100%;
+    }
+  }
+  @include breakpoint(md-up) {
+    width: 10%;
+    img {
+      width: 100%;
+    }
+  }
+}
+
+/////////////////////////////////////
+// MODALS
+/////////////////////////////////////
+#answer-modal,
+#question-form-modal,
+#thanks-modal {
+  padding: 0!important;
+  text-align: center;
+  &:before {
+    content: '';
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+    margin-right: -4px;
+    @include breakpoint(md-up) {
+      height: 100%;
+    }
+  }
+
+  .modal-dialog {
+    display: inline-block;
+    text-align: left;
+    vertical-align: middle;
+  }
+  .modal-content {
+    color: #fff;
+    text-align: center;
+    background-color: $color-green;
+    border: 0;
+
+
+
+    .modal-header {
+      padding: 40px 60px 0;
+      border: 0;
+      h2 {
+        font-size: 36px;
+      }
+      h3 {
+        font-size: 18px;
+        margin-bottom: 20px;
+      }
+      .close {
+        position: absolute;
+        right: 0;
+        top: 0;
+        margin-top: 0;
+        padding: 0 0 10px 0;
+        font-weight: normal;
+        color: #5eab46;
+        border-radius: 0 6px 0 0;
+        opacity: 1;
+        z-index: 1;
+        background-color: #fff;
+        width: 32px;
+        height: 32px;
+        font-size: 34px;
+        line-height: 34px;
+        outline: 0;
+        @include breakpoint(md-up) {
+          line-height: 0;
+        }
+      }
+    }
+
+    .modal-body {
+      border: 0;
+      padding: 0 60px 30px;
+      @include breakpoint(md-up) {
+        padding: 0 60px 40px;
+      }
+      p {
+        font-size: 18px;
+        margin-bottom: 0;
+      }
+    }
+
+  }
+}
+
+#answer-modal {
+  .modal-content {
+
+    .modal-header {
+      padding: 40px 15px 0;
+      h3 {
+        font-size: 24px;
+        margin-bottom: 10px;
+        line-height: 1;
+        font-weight: bold;
+      }
+    }
+    .modal-body {
+      padding: 0 20px 40px;
+    }
+  }
+}
+
+#question-form-modal {
+  text-align: center;
+  padding: 0!important;
+
+  &:before {
+    content: '';
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+    margin-right: -4px;
+  }
+
+  .modal-dialog {
+    display: inline-block;
+    text-align: left;
+    vertical-align: middle;
+  }
+
+  .modal-content {
+    text-align: right;
+    h2 {
+      line-height: 1;
+    }
+    label {
+      font-size: 20px;
+      font-weight: normal;
+    }
+
+    .modal-header {
+      @include breakpoint(md-up) {
+        padding-right: 60px;
+      }
+      .modal-title {
+         margin-bottom: 10px;
+      }
+    }
+
+    .modal-body {
+      position: relative;
+      @include breakpoint(md-up) {
+        padding-right: 60px;
+      }
+    }
+
+    .btn-send {
+
+      padding: 3px 12px;
+      font-size: 24px;
+      color: $color-green;
+      font-weight: bold;
+      @include breakpoint(md-up) {
+        position: absolute;
+        left: 60px;
+        bottom: 55px;
+        padding: 6px 12px;
+        padding-bottom: 10px;
+        line-height: 1;
+      }
+
+      .glyphicon {
+        margin-top: -2px;
+        transform: rotate(-180deg);
+        vertical-align: middle;
+        font-size: 18px;
+      }
+    }
+  }
+}
+
+#thanks-modal {
+  .modal-dialog {
+    @include breakpoint(sm-up) {
+      width: 700px;
+    }
+  }
+  .modal-content {
+    text-align: right;
+    .modal-header {
+      padding: 20px 60px 0;
+      h4 {
+        margin-top: 0;
+      }
+    }
+    .modal-body {
+      padding-bottom: 0;
+      padding-left: 30px;
+      padding-right: 30px;
+    }
+  }
+}
+
+#article-modal,
+#picture-modal {
+  .modal-dialog {
+    //height: calc(100% - 20px);
+    @include breakpoint(md-up) {
+      height: calc(100% - 60px);
+    }
+  }
+  .modal-content {
+    padding: 15px 0;
+    height: 100%;
+    color: #000;
+    text-align: right;
+    border: 0;
+    border-radius: 0;
+
+    .close {
+      position: absolute;
+      right: 0;
+      top: 0;
+      margin-top: 0;
+      padding: 0 0 10px 0;
+      font-weight: normal;
+      color: #fff;
+      border-radius: 0;
+      opacity: 1;
+      z-index: 1;
+      background-color: $color-green;
+      width: 32px;
+      height: 32px;
+      font-size: 34px;
+      line-height: 32px;
+      outline: 0;
+      @include breakpoint(md-up) {
+        line-height: 0;
+      }
+    }
+    .modal-header {
+      direction: rtl;
+      padding: 45px 15px 0;
+      @include breakpoint(md-up) {
+        padding-right: 50px;
+        padding-left: 50px;
+      }
+      border: 0;
+      h2 {
+        font-size: 36px;
+        font-weight: bold;
+        line-height: 1;
+      }
+    }
+    .modal-body-content {
+      direction: ltr;
+      position: relative;
+      height: 100%;
+    }
+
+    .modal-body {
+      direction: rtl;
+      border: 0;
+      padding-top: 0;
+      font-size: 18px;
+
+      @include breakpoint(md-up) {
+        padding: 0 50px 15px;
+      }
+
+      p {
+        font-size: 18px;
+      }
+
+      .picture-holder {
+        margin-bottom: 10px;
+        @include breakpoint(md-up) {
+          width: 200px;
+          height: 200px;
+        }
+        img {
+          height: 100%;
+          width: 100%;
+          object-fit: cover;
+          object-position: center;
+        }
+      }
+    }
+
+  }
+}
+
+#video-modal {
+
+  @include breakpoint(md-up) { // Center video
+    text-align: center;
+    &:before {
+      content: '';
+      display: inline-block;
+      height: 100%;
+      vertical-align: middle;
+      margin-right: -4px;
+    }
+    .modal-dialog {
+      display: inline-block;
+      text-align: center;
+      vertical-align: middle;
+    }
+  }
+  .modal-content {
+    margin-top: 20vh;
+    @include breakpoint(md-up) {
+      margin-top: 0;
+    }
+    .close {
+      position: absolute;
+      right: 0px;
+      top: -35px;
+      width: 32px;
+      height: 32px;
+      padding: 0 0 10px 0;
+      color: #fff;
+      font-size: 32px;
+      font-weight: normal;
+      opacity: 1;
+      outline: 0;
+      background-color: #000;
+      border: 1px solid #fff;
+      z-index: 1;
+      @include breakpoint(md-up) {
+        line-height: 0;
+        right: -35px;
+        top: 0;
+      }
+    }
+    .modal-body {
+      text-align: center;
+      padding: 0;
+      iframe {
+        margin: 0 auto;
+      }
+    }
+  }
+}
+
+
+
+// @mixin placeholder {
+//   ::-webkit-input-placeholder {@content}
+//   :-moz-placeholder           {@content}
+//   ::-moz-placeholder          {@content}
+//   :-ms-input-placeholder      {@content}
+// }
+//
+// @include placeholder {
+//     color: #666666!important;
+//     font-weight: bold;
+// }
