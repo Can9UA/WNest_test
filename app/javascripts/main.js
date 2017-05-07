@@ -55,7 +55,9 @@ function initQuestionsFunctionality() {
   
   const questinTempalte = questionsHolder.find('[data-question-template]').html();
   const popups = {
-    answer: body.find('#answer-modal')
+    answer: body.find('#answer-modal'),
+    questionForm: body.find('#question-form-modal'),
+    thanks: body.find('#thanks-modal')
   };
   
   if (!questinTempalte.length) return false;
@@ -138,10 +140,10 @@ function initQuestionsFunctionality() {
       popups.answer.modal('show');
     })
 
-    const select = body.find('#questionInput');
+    const questionInput = body.find('#questionInput');
     
-    if (select.length) {
-      select.autocomplete({
+    if (questionInput.length) {
+      questionInput.autocomplete({
         source: function (request, response) {
           let re = $.ui.autocomplete.escapeRegex(request.term);
           let matcher = new RegExp(re, "i");
@@ -150,7 +152,8 @@ function initQuestionsFunctionality() {
             ($.map(questionsData, function (question, i) {
               return {
                 label: question.name,
-                value: question.id,
+                value: question.name,
+                id: question.id,
                 keywords: question.keywords
               };
             })),
@@ -161,14 +164,47 @@ function initQuestionsFunctionality() {
         }
       })
       .on("autocompleteselect", function(event, ui) {
-        console.log(ui);
         fillInPopupData(
           popups.answer,
-          getElementFromArr(questionsData, {id: ui.item.value})
+          getElementFromArr(questionsData, {id: ui.item.id})
         );
 
         popups.answer.modal('show');
       });
+    }
+    
+    const questionForm = body.find('.question-search');
+    if (questionForm.length) {
+      questionForm.on('submit', function (e) {
+        e.preventDefault();
+
+        fillInPopupData(
+          popups.questionForm,
+          {question: questionInput.val()}
+        );
+        popups.questionForm.modal('show');
+      })
+    }
+
+    const newQuestionForm = body.find('#new-question-from');
+    if (newQuestionForm.length) {
+      newQuestionForm.on('submit', function (e) {
+        e.preventDefault();
+
+        $.post(`http://devdino.com/tests/js/SendQuestion.ashx`,
+          {
+            name: newQuestionForm.find('#name').val(),
+            email: newQuestionForm.find('#email').val(),
+            question: newQuestionForm.find('#question').val()
+          },
+          function (response) {
+            if (response == 1) {
+              popups.questionForm.modal('hide');
+              popups.thanks.modal('show');
+            }
+          }
+        );
+      })
     }
   }
   
@@ -176,15 +212,24 @@ function initQuestionsFunctionality() {
     $.post(`http://devdino.com/tests/js/GetQuestion.ashx?id=${id}`,
       {},
       function (response) {
-        console.log(`Data dended to devdino.com, with id = "${id}"`);
+        console.log(`Data sended to devdino.com, with id = "${id}"`);
       }
     );
   }
   
   function fillInPopupData(popup, data = {}) {
     for (let field in data ) {
-      popup.find(`[data-question="${field}"]`)
-        .text(data[field]);
+      const fieldElement = popup.find(`[data-question="${field}"]`);
+      
+      if (!fieldElement.length) continue;
+      
+      const fieldElementNode = fieldElement.get(0).nodeName;
+        
+      if (fieldElementNode === 'INPUT' || fieldElementNode === 'TEXTAREA') {
+        fieldElement.val(data[field]);
+      } else {
+        fieldElement.text(data[field]);
+      }
     }
   }
   

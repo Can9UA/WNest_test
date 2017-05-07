@@ -91,25 +91,25 @@
               לצוות המומחים שלנו!</h2>
           </div>
           <div class="modal-body">
-            <form class="" action="index.html" method="post">
+            <form class="" action="index.html" method="post" id="new-question-from">
               <div class="row">
                 <div class="col-xs-12 col-md-8">
                   <div class="form-group">
                     <label for="name">שם:</label>
-                    <input type="text" class="form-control" id="name">
+                    <input type="text" class="form-control" id="name" required data-question="question">
                   </div>
                   <div class="form-group">
                     <label for="email">מייל:</label>
-                    <input type="email" class="form-control" id="email">
+                    <input type="email" class="form-control" id="email" required>
                   </div>
                   <div class="form-group">
                     <label for="question">מה תרצו לשאול?</label>
-                    <textarea class="form-control" id="question" rows="3"></textarea>
+                    <textarea class="form-control" id="question" rows="3" required></textarea>
                   </div>
                 </div>
               </div>
               <div class="pull-right">
-                <button class="btn btn-default btn-send" type="button" name="button">שלח
+                <button class="btn btn-default btn-send" type="submit" name="button">שלח
                   <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
                 </button>
               </div>
