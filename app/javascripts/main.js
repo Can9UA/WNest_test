@@ -53,26 +53,43 @@ function initQuestionsFunctionality() {
   const questionsHolder = body.find('.swiper-wrapper');
   if (!questionsHolder.length) return false;
   
+  // HTML template for questions
   const questinTempalte = questionsHolder.find('[data-question-template]').html();
+  if (!questinTempalte.length) return false;
+  
+  // All available popups
   const popups = {
     answer: body.find('#answer-modal'),
     questionForm: body.find('#question-form-modal'),
     thanks: body.find('#thanks-modal')
   };
-  
-  if (!questinTempalte.length) return false;
-  
+  // Popups method for show and filling popups fields
+  popups.showPopup = function (popupName, data) {
+    if (!popupName) return false;
+    
+    const curPopup = popups[popupName];
+    if (!curPopup || typeof curPopup.modal !== 'function') return false;
+    
+    if (classOf(data) === 'Object') {
+      fillInPopupData(
+        curPopup,
+        data
+      );
+    }
+
+    curPopup.modal('show');
+  }
+
   let questionsData = [];
-  
-  // getQuestions function accepts the array of callbacks
-  // that are executed when the request is successfully terminated
+    /* Accepts the array of callbacks
+  that are executed when the request is successfully terminated */
   getQuestions([
     addQuestions,
     RegisterSliders,
     addHandlers
   ]);
   
-  //////////
+  ////////// Methods //////////
 
   // accepts the array of callbacks that are executed when the request is successfully terminated
   function getQuestions(callbacks) {
@@ -85,7 +102,6 @@ function initQuestionsFunctionality() {
       .done(function (data) {
         if (!data.length) {
           console.warn('No questions!');
-          
           return false;
         }
         
@@ -106,6 +122,7 @@ function initQuestionsFunctionality() {
       });
   }
   
+  // Add questions into page
   function addQuestions(questions = questionsData) {
     for (let question of questions) {
       let questionHTML = fillInTemplate(questinTempalte, question);
@@ -125,87 +142,74 @@ function initQuestionsFunctionality() {
   }
   
   function addHandlers() {
+    // Open poups on click
     questionsHolder.on('click', '.swiper-slide', function (e) {
       e.preventDefault();
-      let guestion = $(this);
-      let guestionId = guestion.data('id');
+      const guestion = $(this);
+      const guestionId = guestion.data('id');
+      const popupData = getElementFromArr(questionsData, {id: guestionId});
       
       updateQuestionCounter(guestionId);
-      
-      fillInPopupData(
-        popups.answer,
-        getElementFromArr(questionsData, {id: guestionId})
-      );
-      
-      popups.answer.modal('show');
+
+      popups.showPopup('answer', popupData);
     })
 
+    // Form submit handlers
+    // Question input
     const questionInput = body.find('#questionInput');
-    
-    if (questionInput.length) {
-      questionInput.autocomplete({
-        source: function (request, response) {
-          let re = $.ui.autocomplete.escapeRegex(request.term);
-          let matcher = new RegExp(re, "i");
-          
-          response($.grep(
-            ($.map(questionsData, function (question, i) {
-              return {
-                label: question.name,
-                value: question.name,
-                id: question.id,
-                keywords: question.keywords
-              };
-            })),
-            function (question) {
-              return isQuestionMatch(question, matcher)
-            }
-          ))
-        }
-      })
-      .on("autocompleteselect", function(event, ui) {
-        fillInPopupData(
-          popups.answer,
-          getElementFromArr(questionsData, {id: ui.item.id})
-        );
+    questionInput.autocomplete({
+      source: function (request, response) {
+        let re = $.ui.autocomplete.escapeRegex(request.term);
+        let matcher = new RegExp(re, "i");
 
-        popups.answer.modal('show');
-      });
-    }
-    
-    const questionForm = body.find('.question-search');
-    if (questionForm.length) {
-      questionForm.on('submit', function (e) {
-        e.preventDefault();
-
-        fillInPopupData(
-          popups.questionForm,
-          {question: questionInput.val()}
-        );
-        popups.questionForm.modal('show');
-      })
-    }
-
-    const newQuestionForm = body.find('#new-question-from');
-    if (newQuestionForm.length) {
-      newQuestionForm.on('submit', function (e) {
-        e.preventDefault();
-
-        $.post(`http://devdino.com/tests/js/SendQuestion.ashx`,
-          {
-            name: newQuestionForm.find('#name').val(),
-            email: newQuestionForm.find('#email').val(),
-            question: newQuestionForm.find('#question').val()
-          },
-          function (response) {
-            if (response == 1) {
-              popups.questionForm.modal('hide');
-              popups.thanks.modal('show');
-            }
+        response($.grep(
+          ($.map(questionsData, function (question, i) {
+            return {
+              label: question.name,
+              value: question.name,
+              id: question.id,
+              keywords: question.keywords
+            };
+          })),
+          function (question) {
+            return isQuestionMatch(question, matcher)
           }
-        );
-      })
-    }
+        ))
+      }
+    });
+    questionInput.on("autocompleteselect", function(event, ui) {
+      const popupData = getElementFromArr(questionsData, {id: ui.item.id});
+
+      popups.showPopup('answer', popupData);
+    });
+   
+    // Question form
+    const questionForm = body.find('.question-search');
+    questionForm.on('submit', function (e) {
+      e.preventDefault();
+
+      popups.showPopup('questionForm', {question: questionInput.val()});
+    })
+
+    // Add new question form
+    const newQuestionForm = body.find('#new-question-from');
+    newQuestionForm.on('submit', function (e) {
+      e.preventDefault();
+
+      $.post(`http://devdino.com/tests/js/SendQuestion.ashx`,
+        {
+          name: newQuestionForm.find('#name').val(),
+          email: newQuestionForm.find('#email').val(),
+          question: newQuestionForm.find('#question').val()
+        },
+        function (response) {
+          if (response == 1) {
+            popups.questionForm.modal('hide');
+            popups.showPopup('thanks');
+          }
+        }
+      );
+    })
   }
   
   function updateQuestionCounter(id) {
@@ -250,6 +254,10 @@ function initQuestionsFunctionality() {
     for (let keyword of question.keywords) {
       if (matcher.test(keyword)) return true;
     }
+  }
+
+  function classOf(object) {
+    return Object.prototype.toString.call(object).slice(8, -1);
   }
 }
 
