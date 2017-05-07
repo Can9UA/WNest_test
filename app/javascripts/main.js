@@ -50,6 +50,8 @@ function initQuestionsFunctionality() {
   
   const body = $('body');
   
+  setActiveTab('nav > a');
+  
   const questionsHolder = body.find('.swiper-wrapper');
   if (!questionsHolder.length) return false;
   
@@ -90,6 +92,17 @@ function initQuestionsFunctionality() {
   ]);
   
   ////////// Methods //////////
+  function setActiveTab(selector) {
+    const tabs = body.find(selector);
+
+    for (let i = 0, len = tabs.length; i < len; i++) {
+      const tab = tabs.eq(i);
+      
+      if (`/${tab.attr('href')}` === window.location.pathname) {
+        tab.addClass('active');
+      }
+    }
+  }
 
   // accepts the array of callbacks that are executed when the request is successfully terminated
   function getQuestions(callbacks) {
