@@ -32,107 +32,17 @@
         <div class="questions-menu">
           <div class="swiper-container" dir="rtl">
             <div class="swiper-wrapper">
-
-              <div class="swiper-slide">
-                <a href="#">
-                  <div class="question-box thumbnail">
-                    <div class="caption">
-                      <h5>מה זה חלב משק?</h5>
+              <script type="text/template" data-question-template>
+                <div class="swiper-slide">
+                  <a href="#">
+                    <div class="question-box thumbnail">
+                      <div class="caption">
+                        <h5>{{name}}</h5>
+                      </div>
                     </div>
-                  </div>
-                </a>
-              </div>
-              <div class="swiper-slide">
-                <a href="#">
-                  <div class="question-box thumbnail">
-                    <div class="caption">
-                      <h5>מדוע החלב הזה טוב יותר לצרכנים מאשר החלב הרגיל של תנובה?</h5>
-                    </div>
-                  </div>
-                </a>
-              </div>
-              <div class="swiper-slide">
-                <a href="#">
-                  <div class="question-box thumbnail">
-                    <div class="caption">
-                      <h5>איך יודעים שהחלב של המתחרים הוא לא חלב משק?</h5>
-                    </div>
-                  </div>
-                </a>
-              </div>
-              <div class="swiper-slide">
-                <a href="#">
-                  <div class="question-box thumbnail">
-                    <div class="caption">
-                      <h5>האם בכוונתכם להרחיב את המהלך למוצרים אחרים – גבינות/שוקו? </h5>
-                    </div>
-                  </div>
-                </a>
-              </div>
-              <div class="swiper-slide">
-                <a href="#">
-                  <div class="question-box thumbnail">
-                    <div class="caption">
-                      <h5>מה זה חלב משק?</h5>
-                    </div>
-                  </div>
-                </a>
-              </div>
-              <div class="swiper-slide">
-                <a href="#">
-                  <div class="question-box thumbnail">
-                    <div class="caption">
-                      <h5>מה זה חלב משק?</h5>
-                    </div>
-                  </div>
-                </a>
-              </div>
-              <div class="swiper-slide">
-                <a href="#">
-                  <div class="question-box thumbnail">
-                    <div class="caption">
-                      <h5>מה זה חלב משק?</h5>
-                    </div>
-                  </div>
-                </a>
-              </div>
-              <div class="swiper-slide">
-                <a href="#">
-                  <div class="question-box thumbnail">
-                    <div class="caption">
-                      <h5>מה זה חלב משק?</h5>
-                    </div>
-                  </div>
-                </a>
-              </div>
-              <div class="swiper-slide">
-                <a href="#">
-                  <div class="question-box thumbnail">
-                    <div class="caption">
-                      <h5>איזה ערכים תזונתיים השתפרו?</h5>
-                    </div>
-                  </div>
-                </a>
-              </div>
-              <div class="swiper-slide">
-                <a href="#">
-                  <div class="question-box thumbnail">
-                    <div class="caption">
-                      <h5>מה זה חלב משק?</h5>
-                    </div>
-                  </div>
-                </a>
-              </div>
-              <div class="swiper-slide">
-                <a href="#">
-                  <div class="question-box thumbnail">
-                    <div class="caption">
-                      <h5>מה זה חלב משק?</h5>
-                    </div>
-                  </div>
-                </a>
-              </div>
-
+                  </a>
+                </div>
+              </script>
             </div>
           </div>
           <!-- Add Pagination -->
@@ -156,18 +66,15 @@
       </div>
     </div>
 
-    <div  id="answer-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+    <div id="answer-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h3 class="modal-title" id="">מה זה אומגה 3 ולמה זה טוב?</h3>
+            <h3 class="modal-title" id="" data-question="name"></h3>
           </div>
           <div class="modal-body">
-            <p>
-              אומגה 3 הוא סוג שומן החיוני לבריאות, הן לילדים והן למבוגרים, ויש לו חשיבות יתרה לבריאות הלב ולהתפתחות העובר.
-צריכה נאותה של אומגה 3 משפרת את רמת השומנים בדם, חיונית לבריאות הלב, תורמת לבריאות הנפשית ולהתפתחות תקינה של ילדים מהעוברות ועד הבגרות. העשרה של תזונת הפרות, מעלה את כמות האומגה 3 בחלב, אשר תורמת לצריכה היומית הכוללת של אומגה 3 בכל הגילאים. גוף האדם אינו מסוגל לייצר אותן בעצמו ולכן דרושה לו אספקה חיצונית.
-            </p>
+            <p data-question="answer"></p>
           </div>
         </div>
       </div>
